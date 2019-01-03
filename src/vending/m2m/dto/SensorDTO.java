@@ -1,6 +1,6 @@
 package vending.m2m.dto;
 
-public class VendingSensorData {
+public class SensorDTO {
 
 	public int machineId;
 	public int sensorId;
@@ -18,14 +18,14 @@ public class VendingSensorData {
 		return value;
 	}
 
-	public VendingSensorData(int machineId, int sensorId, int value) {
+	public SensorDTO(int machineId, int sensorId, int value) {
 		super();
 		this.machineId = machineId;
 		this.sensorId = sensorId;
 		this.value = value;
 	}
 
-	public VendingSensorData(){
+	public SensorDTO(){
 		
 	}
 

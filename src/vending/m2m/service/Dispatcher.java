@@ -12,7 +12,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import vending.m2m.dto.VendingSensorData;
+import vending.m2m.dto.SensorDTO;
 
 @EnableBinding(IDispatcher.class)
 public class Dispatcher {
@@ -30,7 +30,7 @@ public class Dispatcher {
 
 	@StreamListener(IDispatcher.INPUT)
 	void getSensorData(String jsonSensor) throws JsonParseException, JsonMappingException, IOException {
-		VendingSensorData sensor = mapper.readValue(jsonSensor, VendingSensorData.class);
+		SensorDTO sensor = mapper.readValue(jsonSensor, SensorDTO.class);
 	
 		if (sensor.sensorId < 200 && sensor.value <= minProductValue)
 			channels.maintenance().send(MessageBuilder.withPayload(jsonSensor).build());
