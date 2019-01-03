@@ -34,7 +34,7 @@ public class Dispatcher {
 	
 		if (sensor.sensorId < 200 && sensor.value <= minProductValue)
 			channels.maintenance().send(MessageBuilder.withPayload(jsonSensor).build());
-		else if (sensor.sensorId >= 200 && sensor.value >= maxMoneyValue)
+		else if (sensor.sensorId >= 200 && sensor.sensorId < 400 && sensor.value >= maxMoneyValue)
 			channels.maintenance().send(MessageBuilder.withPayload(jsonSensor).build());
 		else if (sensor.sensorId >= 600 && sensor.value == 1)
 			channels.malfunction().send(MessageBuilder.withPayload(jsonSensor).build());
