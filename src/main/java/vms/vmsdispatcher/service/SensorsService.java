@@ -21,21 +21,14 @@ public class SensorsService implements ISensors {
   @Override
   public SensorTypeEnum getSensorType(int sensorId) {
     Map<String, SensorProps> ranges = this.params.getSensorRanges();
-    if (
-      sensorId >= ranges.get("DECREASE").getFrom() && 
-      sensorId <= ranges.get("DECREASE").getTo()) {
-      // log.info("MAPPED DECREASE SENSOR WITH ID: {}", sensorId);
-      return SensorTypeEnum.DECREASE;
-    } else if (
-      sensorId >= ranges.get("CRASH").getFrom() && 
-      sensorId <= ranges.get("CRASH").getTo()) {
-      // log.info("MAPPED CRASH SENSOR WITH ID: {}", sensorId);
+    if (sensorId >= ranges.get("PRODUCT").getFrom() && sensorId <= ranges.get("PRODUCT").getTo()) {
+      return SensorTypeEnum.PRODUCT;
+    } else if (sensorId >= ranges.get("CRASH").getFrom() && sensorId <= ranges.get("CRASH").getTo()) {
       return SensorTypeEnum.CRASH;
-    } else if (
-      sensorId >= ranges.get("INCREASE").getFrom() && 
-      sensorId <= ranges.get("INCREASE").getTo()) {
-      // log.info("MAPPED INCREASE SENSOR WITH ID: {}", sensorId);
+    } else if (sensorId >= ranges.get("INCREASE").getFrom() && sensorId <= ranges.get("INCREASE").getTo()) {
       return SensorTypeEnum.INCREASE;
+    } else if (sensorId >= ranges.get("DECREASE").getFrom() && sensorId <= ranges.get("DECREASE").getTo()) {
+      return SensorTypeEnum.DECREASE;
     } else {
       log.error("SENSOR WITH ID: {} IS NOT MAPPED", sensorId);
       return SensorTypeEnum.NOT_MAPPED;

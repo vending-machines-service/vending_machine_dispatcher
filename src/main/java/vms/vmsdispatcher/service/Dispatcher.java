@@ -40,11 +40,19 @@ public class Dispatcher {
     log.info("[TOPIC]:COMMON({})      => [MACHINE: {}; SENSOR:{}; VALUE: {}] ", sensorType, sensor.getMachineId(),
         sensor.getSensorId(), sensor.getValue());
 
+    if (sensorType == SensorTypeEnum.PRODUCT) {
+      channels.sendProductsChannel().send(MessageBuilder.withPayload(jsonSensor).build());
+      log.info("[TOPIC]:PRODUCT({})   => [MACHINE: {}; SENSOR:{}; VALUE: {}] ", sensorType, sensor.getMachineId(),
+          sensor.getSensorId(), sensor.getValue());
+    }
+
     if (sensorType == SensorTypeEnum.CRASH && sensor.getValue() == 1) {
       this.channels.sendMalfunctionChannel().send(MessageBuilder.withPayload(jsonSensor).build());
-      log.info("[TOPIC]:MALFUNCTION({}) => [MACHINE: {}; SENSOR:{}; VALUE: {}] ", sensorType, sensor.getMachineId(), sensor.getSensorId(), sensor.getValue());
+      log.info("[TOPIC]:MALFUNCTION({}) => [MACHINE: {}; SENSOR:{}; VALUE: {}] ", sensorType, sensor.getMachineId(),
+          sensor.getSensorId(), sensor.getValue());
     } else if ((sensorType == SensorTypeEnum.INCREASE && this.isIncreaseExtreme(sensor.getValue()))
-        || (sensorType == SensorTypeEnum.DECREASE && this.isDecreaseExtreme(sensor.getValue()))) {
+        || ((sensorType == SensorTypeEnum.DECREASE || sensorType == SensorTypeEnum.PRODUCT)
+            && this.isDecreaseExtreme(sensor.getValue()))) {
       log.info("[TOPIC]:MAINTENANCE({}) => [MACHINE: {}; SENSOR:{}; VALUE: {}] ", sensorType, sensor.getMachineId(),
           sensor.getSensorId(), sensor.getValue());
       this.channels.sendMaintenanceChannel().send(MessageBuilder.withPayload(jsonSensor).build());

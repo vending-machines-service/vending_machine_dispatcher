@@ -8,6 +8,7 @@ public interface IDispatcher extends Sink {
 
 	String MAINTENANCE = "maintenance";
 	String MALFUNCTION = "malfunction";
+	String PRODUCTS = "products";
 	String COMMON = "common";
 
 	@Output(MAINTENANCE)
@@ -18,4 +19,7 @@ public interface IDispatcher extends Sink {
 
 	@Output(COMMON)
 	MessageChannel sendCommonChannel();
+
+	@Output(PRODUCTS)
+	MessageChannel sendProductsChannel();
 }
